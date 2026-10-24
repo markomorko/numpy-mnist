@@ -68,6 +68,7 @@ plot_first_100(X_train)
 Ejercicio1 1. Create matrix_first_100_labels, a 10×10 array with the first 100 labels, 
 and display it. It should match the grid of images above.
 """
+print("Ejercicio 1\n")
 # Selecciono los primeros 100 elementos del array de imágenes
 matrix_first_100_labels=y_train[:100]
 
@@ -79,6 +80,7 @@ print (matrix_first_100_labels.reshape(10,10))
  each 28×28 image becomes a vector of 784 pixels. 
  Create X_train_flat and X_test_flat, with shapes 60,000×784 and 10,000×784.
 """
+print("Ejercicio 2\n")
 # Creo los arrays a partir de los existentes y los ajusto con reshape(filas,columnas)
 
 X_train_flat = X_train.reshape(60000,784)
@@ -89,6 +91,7 @@ X_test_flat  = X_test.reshape(10000,784)
 3. Change plot_image so that it accepts both a 28×28 image
  and a flat row of 784 pixels. Check it with X_train_flat[0].
 """
+print("Ejercicio 3\n")
 import matplotlib.pyplot as plt
 
 def plot_image(image: np.ndarray) -> None:
@@ -101,3 +104,18 @@ def plot_image(image: np.ndarray) -> None:
 plot_image(X_train_flat[0])
 
 
+"""
+4 Check, with one expression and no loop, 
+that the bottom-right pixel is 0 in every training image
+"""
+print("Ejercicio 4\n")
+
+# Con las funciones de indexación de NumPy
+# seleccionamos todos los pixel de la esquina inferior
+# derecha de las imagenes
+es_cero=np.all(X_train[:,-1,-1] == 0)
+if es_cero:
+	print("Éxito => son cero")
+else:
+	print ("Fallo => No todos los pixeles son cero")
+		
