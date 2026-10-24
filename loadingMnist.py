@@ -113,9 +113,78 @@ print("Ejercicio 4\n")
 # Con las funciones de indexación de NumPy
 # seleccionamos todos los pixel de la esquina inferior
 # derecha de las imagenes
+
 es_cero=np.all(X_train[:,-1,-1] == 0)
 if es_cero:
 	print("Éxito => son cero")
 else:
 	print ("Fallo => No todos los pixeles son cero")
 		
+
+"""
+5. Does any digit touch the edge of its frame? 
+Store in n_touching_border the number of training images
+with ink (a non-zero pixel) in their first or last 
+row or column.
+
+"""		
+print("Ejercicio 5\n")
+
+# Con un bucle recorremos las imágenes del array
+# Comprobamos si son distintas de cero (1) y
+# las guardamos.
+
+n_touching_border=0
+
+for imagen in X_train:
+    if (np.any(imagen[ 0, :] !=0 ) or
+    	np.any(imagen[-1, :] !=0 ) or
+        np.any(imagen[ :, 0] !=0 ) or
+   		np.any(imagen[ :,-1] !=0)):
+	    n_touching_border+=1
+
+print("Hay ",n_touching_border," imágenes que tocan el borde")
+
+"""
+En los bordes de las imágenes
+El primer índice indica la fila
+y el segundo la columna
+
+Bordes:
+
+[ 0, :] Borde Superior  
+[-1, :] Borde Inferior
+[ :, 0] Borde izquierdo 
+[ :,-1] Borde derecho
+
+El truco es recordar que con -1 indicamos la última fila 
+o columna de la dimensión
+
+Por ejemplo, esta matriz de coordenadas fila,columna:
+
+ 0,0  0,1  0,2
+ 1,0  1,1  1,2
+ 2,0  2,1  2,2
+
+ Pasaría a:
+
+  0,0  0,1  0,-1
+  1,0  1,1  1, 2
+ -1,0  2,1  2,-1
+
+y los dos puntos => : representan todos los
+elementos de esa dimensión.
+
+ 0, :  => Primera fila y tooodos los primeros elementos de las columnas
+-1, :  => Ultima fila y todos los últimos elementos de las columnas
+ :, 0  => Todos los elementos de la primera columna
+ :,-1  => Todos los elementos de la última columna
+
+
+Por eso seleccionamos
+[ 0, :] Borde Superior  
+[-1, :] Borde Inferior
+[ :, 0] Borde izquierdo 
+[ :,-1] Borde derecho
+
+"""
