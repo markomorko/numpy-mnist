@@ -36,7 +36,7 @@ def print_pixel_values(image: np.ndarray) -> None:
 
 print_pixel_values(X_train[0])
 
-
+##
 import matplotlib.pyplot as plt
 
 
@@ -47,6 +47,8 @@ def plot_image(image: np.ndarray) -> None:
 
 
 plot_image(X_train[0])
+
+##
 
 y_train[0]
 
@@ -71,4 +73,31 @@ matrix_first_100_labels=y_train[:100]
 
 # Los muestro                     
 print (matrix_first_100_labels.reshape(10,10))
+
+"""
+2. Many models expect each example as one flat row of numbers:
+ each 28×28 image becomes a vector of 784 pixels. 
+ Create X_train_flat and X_test_flat, with shapes 60,000×784 and 10,000×784.
+"""
+# Creo los arrays a partir de los existentes y los ajusto con reshape(filas,columnas)
+
+X_train_flat = X_train.reshape(60000,784)
+X_test_flat  = X_test.reshape(10000,784)
+
+
+"""
+3. Change plot_image so that it accepts both a 28×28 image
+ and a flat row of 784 pixels. Check it with X_train_flat[0].
+"""
+import matplotlib.pyplot as plt
+
+def plot_image(image: np.ndarray) -> None:
+    if image.ndim==1:                  
+        image=image.reshape(28,28)
+    plt.imshow(image, cmap="binary")
+    plt.axis("off")
+    plt.show()
+
+plot_image(X_train_flat[0])
+
 
