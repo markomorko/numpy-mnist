@@ -188,3 +188,17 @@ Por eso seleccionamos
 [ :,-1] Borde derecho
 
 """
+
+"""
+6. Compute X_train[0] + X_train[0] and look at its maximum.
+Then compute the same sum correctly, and store in n_overflowed_pixels the number
+of pixels where the two results differ. Why do they differ?
+
+"""
+print("Ejercicio 6\n")
+
+info="n_overflowed_pixels=np.max(X_train\\[0\\])*2 => Daría error\n Debemos convertir el resultado de np.max que es de tipo uint8 (0 255 bits) a int"
+print("Nota ",info,"\n")
+
+n_overflowed_pixels=int(np.max(X_train[0]))*2
+print("n_overflowed_pixels => ",n_overflowed_pixels)
