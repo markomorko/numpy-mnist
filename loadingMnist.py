@@ -283,3 +283,34 @@ pixel_norm_std= np.std(X_train_norm)
 print("pixel_norm_mean => ",pixel_norm_mean," pixel_norm_std =>",pixel_norm_std)
 
 
+
+"""
+Ejercicio 11.
+Standardise the images: subtract the mean and divide by the standard deviation,
+so that the pixels have mean 0 and standard deviation 1.
+Create X_train_standardized and X_train_standardized.
+Compute μ and σ on the training images only, 
+and use those same two numbers for the test images.
+
+Estandariza las imagenes: resta la media y divídela por la desviación estandar,
+de forma que los pixels tengan media => 0 y desviación estándar => 1.
+
+Crea X_train_standardized y X_test_standardized.
+Calcula mu y sigma solo en las imágenes de entrenamiento y
+emplea esos números para las imágenes de test.
+"""
+
+print("Ejercicio 11")
+
+# Numpy nos permite vectorizar operaciones en sus elementos, no 
+# necesitamos un bucle para estandarizar uno a uno los elementos
+
+# Como con X_train_norm, hacemos X_test_norm
+X_test_norm=(X_test/255.00).astype(np.float32)
+
+X_train_standardized=(X_train_norm - pixel_norm_mean) / pixel_norm_std
+X_test_standardized=(X_test_norm - pixel_norm_mean) / pixel_norm_std
+
+print("Comparación\npz")
+print("Antes  X_train_norm[0,10,10] \n",X_train_norm[0,10,10],"\n")
+print("Despues X_train_standardized[0,10,10]\n",X_train_standardized[0,10,10],"\n")
