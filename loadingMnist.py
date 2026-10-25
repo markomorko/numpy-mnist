@@ -227,3 +227,17 @@ y_train_onehot=np.eye(10,dtype=int)[y_train]
 y_test_onehot=np.eye(10,dtype=int)[y_train]
 print("y_train_onehot=> ",y_train_onehot,end=("\n"))
 print("y_test_onehot=> ",y_test_onehot,end=("\n"))
+
+"""
+Ejercicio 8. Muestra el mínimo, máximo,
+media y desviación estandar de los 
+pixels de las imágenes de entrenamiento
+"""
+print("Ejercicio 8")
+
+# np tiene funciónes para mostrar esos valores
+print("Datos de los pixels de las imágenes de entrenamiento\n")
+print("Máximo => ",np.max(X_train),
+    " Mínino => ",np.min(X_train),
+    " Media => ",np.mean(X_train),
+    " Desviación estándar => ",np.std(X_train),sep=":::",end=(":::"))
