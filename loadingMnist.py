@@ -202,3 +202,28 @@ print("Nota ",info,"\n")
 
 n_overflowed_pixels=int(np.max(X_train[0]))*2
 print("n_overflowed_pixels => ",n_overflowed_pixels)
+
+"""
+7. One-hot encoding
+Some models expect each label as a one-hot vector: ten numbers,
+all 0 except a 1 at the position of the digit.
+Label 5 becomes [0, 0, 0, 0, 0, 1, 0, 0, 0, 0].
+Create y_train_onehot and y_test_onehot.
+
+"""
+print("Ejercicio 7\n")
+
+# Cada dígito se representa como un vector one-hot
+# de diez posiciones con un "1" donde corresponde
+# 1 se representaria como una matriz:
+#1=> [0,1,0,0,0,0,0,0,0,0]
+#2=> [0,0,1,0,0,0,0,0,0,0]
+#3=> [0,0,0,1,0,0,0,0,0,0]
+#x=> [ceros excepto la posición x =>1]
+
+
+print("Empleamos la función np.eye\\(\\) que crea una matriz identidad de 10x10\n")
+y_train_onehot=np.eye(10,dtype=int)[y_train]
+y_test_onehot=np.eye(10,dtype=int)[y_train]
+print("y_train_onehot=> ",y_train_onehot,end=("\n"))
+print("y_test_onehot=> ",y_test_onehot,end=("\n"))
