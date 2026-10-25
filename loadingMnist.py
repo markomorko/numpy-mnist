@@ -241,3 +241,24 @@ print("Máximo => ",np.max(X_train),
     " Mínino => ",np.min(X_train),
     " Media => ",np.mean(X_train),
     " Desviación estándar => ",np.std(X_train),sep=":::",end=(":::"))
+
+"""
+Ejercicio 9. Escala las imágenes de entrenamiento al rango
+[0,1] como X_train_norm, tipo float32. Haz el plot de
+la primera imagen
+"""
+print("Ejercicio 9")
+
+# Convertímos los datos con astype y el tipo de dato
+X_train_norm=(X_train/255.00).astype(np.float32)
+
+"""
+Reutilizo esta función para mostrar el plot
+
+def plot_image(image: np.ndarray) -> None:
+    plt.imshow(image, cmap="binary")
+    plt.axis("off")
+    plt.show()
+"""
+
+plot_image(X_train_norm[0])
