@@ -262,3 +262,24 @@ def plot_image(image: np.ndarray) -> None:
 """
 
 plot_image(X_train_norm[0])
+
+
+"""
+Ejercicio 10.
+Store in pixel_norm_mean and pixel_norm_std the mean and the standard deviation 
+of the pixels of X_train_norm. You will meet these two numbers again.
+
+Almacen en => pixel_norm_mean y pixel_norm_std la media y la desviación estándar
+de los pixels de X_train_norm. 
+Débes hallar otra vez esos dos valores
+"""
+print("Ejercicio 10")
+
+#Volvemos a calcular mean y std, ahora de X_train_norm (Con los valores normalizados)
+
+pixel_norm_mean= np.mean(X_train_norm)
+pixel_norm_std= np.std(X_train_norm)
+
+print("pixel_norm_mean => ",pixel_norm_mean," pixel_norm_std =>",pixel_norm_std)
+
+
