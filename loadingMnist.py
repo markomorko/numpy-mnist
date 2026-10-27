@@ -70,7 +70,7 @@ and display it. It should match the grid of images above.
 """
 print("Ejercicio 1\n")
 # Selecciono los primeros 100 elementos del array de imágenes
-matrix_first_100_labels=y_train[:100]
+matrix_first_100_labels=y_train[:100].reshape(10,10)
 
 # Los muestro                     
 print (matrix_first_100_labels.reshape(10,10))
