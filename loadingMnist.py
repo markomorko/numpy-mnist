@@ -311,6 +311,8 @@ X_test_norm=(X_test/255.00).astype(np.float32)
 X_train_standardized=(X_train_norm - pixel_norm_mean) / pixel_norm_std
 X_test_standardized=(X_test_norm - pixel_norm_mean) / pixel_norm_std
 
-print("Comparación\npz")
+print("Media estandarizada de X_train ",X_train_standardized.mean(),"\n")
+print("Media estandarizada de X_test ",X_test_standardized.mean(),"\n")
+print("Comparación\n")
 print("Antes  X_train_norm[0,10,10] \n",X_train_norm[0,10,10],"\n")
 print("Despues X_train_standardized[0,10,10]\n",X_train_standardized[0,10,10],"\n")
