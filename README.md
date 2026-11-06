@@ -2,7 +2,7 @@
 
 A first project with NumPy, and with the tools of every software project: Git, a fork, a virtual environment, tests and continuous integration.
 
-MNIST is a classic dataset of 70,000 handwritten digits, each a 28×28 grid of numbers. Loaded into Python, a set of images is just a NumPy array, of shape 60,000×28×28 for the training set, so everything you do to images (scaling them, adding noise, shifting and cropping them) is array manipulation. The [exercises](mnist_numpy.ipynb) go from shapes and data types to normalisation without leakage, loops against vectorisation, and data augmentation by hand. Tests check your answers, and a [solution](mnist_numpy_solution.ipynb) compares alternative ways of solving each exercise.
+MNIST is a classic dataset of 70,000 handwritten digits, each a 28×28 grid of numbers. Loaded into Python, a set of images is just a NumPy array, of shape 60,000×28×28 for the training set, so everything you do to images (scaling them, adding noise, shifting and cropping them) is array manipulation. The [exercises](mnist_numpy.ipynb) go from shapes and data types to normalisation without leakage, loops against vectorisation, and data augmentation by hand. Tests check your answers, and a [solution](mnist_numpy_solution.ipynb) compares alternative ways of solving each exercise. A [last notebook](vectorised_shift.ipynb) goes further: the shift of the augmentation without a loop, and where its time goes.
 
 ## What you need
 
@@ -112,6 +112,7 @@ If this repository changes after you fork it, GitHub's *Sync fork* button, on yo
 | --- | --- |
 | [`mnist_numpy.ipynb`](mnist_numpy.ipynb) | The exercises |
 | [`mnist_numpy_solution.ipynb`](mnist_numpy_solution.ipynb) | A solution, with alternatives compared |
+| [`vectorised_shift.ipynb`](vectorised_shift.ipynb) | Exercise 22's shift without a loop, checked and timed part by part |
 | [`tests/test_mnist_numpy.py`](tests/test_mnist_numpy.py) | The tests, one or more per exercise |
 | [`.github/workflows/tests.yml`](.github/workflows/tests.yml) | The continuous-integration workflow |
 | `requirements.txt`, `pytest.ini` | The packages, and the tests' settings (warnings count as errors) |
