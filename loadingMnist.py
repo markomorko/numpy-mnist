@@ -346,3 +346,47 @@ if np.allclose(X_train_norm_standardized,X_train_standardized):
     print("\nX_train_norm_standardized y X_train_standardized son aproximadamente iguales")
 print("\nLos valores son practicamente iguales debido a todos los valores se dividen entre\n"
     "255 por lo tanto ese factor se cancela al estandarizar")
+
+"""
+ "Se volvieron a numerar los ejercicios".
+Data Augmentation
+El aumento de datos consiste en generar nuevos ejemplos de entrenamiento mediante 
+transformaciones de los datos originales. Por ejemplo, un dígito desplazado unos
+píxeles o al cuál se ha añadido algo de ruido sigue representantdo el mismo número.
+Un modelo entrenado con estoss datos aumentados dispone de ejmplos más varidos,
+lo que puede mejorar su capacidad de generalización ante datos nuevos.
+
+Las bibliotecas de deep learning permiten realizar estas tansformaciones automáticamente, pero 
+en esta práctica se implementarán de forma manual.
+
+Ejercicio 14
+Crea una función llamada add_gaussian_noise(images, std) que 
+añada a cada píxel un valor de ruido aleatorio procedente de una 
+distribuición normal, con media 0 y desviación estándar std.
+
+La función debe devolver imágenes del mismo tipo y rango que 
+la entrada (uint8,0-255). 
+
+Crea X_train_noisy con std=50 y haz plot con las primeras 100 imágenes.
+
+¿Qué es el ruido gaussiano (Gaussian Noise)?
+Es una alteración aleatoria de los valores de los píxeles siguiendo una distribución normal.
+
+Puede utilizarse para simular condiciones imperfectas de captura de imágenes, 
+como las producidas por los sensores de una cámara. 
+Esto puede ayudar a entrenar modelos de aprendizaje automático (Machine Learning) más robustos.
+
+
+"""
+def add_gaussian_noise(images: np.ndarray, std: float) -> np.ndarray:
+    rng = np.random.default_rng(seed=0)
+
+    noise = rng.normal(0, std, images.shape)
+
+    noisy_images = images.astype(np.float32) + noise
+    noisy_images = np.clip(noisy_images, 0, 255)
+
+    return noisy_images.astype(np.uint8)
+
+X_train_noisy = add_gaussian_noise(X_train, std=50)
+plot_first_100(X_train_noisy)    
