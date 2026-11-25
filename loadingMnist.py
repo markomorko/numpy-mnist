@@ -451,3 +451,205 @@ X_train_noisy_binarized=binarize_image(X_train_noisy,240)
 plot_first_100(X_train_noisy_binarized)   
 
 print("Si el umbral es muy bajo, se observa ruido, si es muy alto se pierden detalles")
+
+"""
+Ejercicio 18
+Escribe una función shift_image(image, dx, dy) que desplace una imagen dx píxeles hacia la derecha
+ (hacia la izquierda si es negativo) y dy píxeles hacia abajo (hacia arriba si es negativo), 
+ rellenando con ceros los espacios que queden vacíos.
+
+Representa la primera imagen desplazada 10 píxeles en cada una de las cuatro direcciones, 
+utilizando una celda independiente para cada desplazamiento.
+"""
+def shift_image(image, dx, dy):
+    shifted = np.zeros_like(image)
+
+    h, w = image.shape
+
+    x_src_start = max(0, -dx)
+    x_src_end = min(w, w - dx)
+    y_src_start = max(0, -dy)
+    y_src_end = min(h, h - dy)
+
+    if x_src_start < x_src_end and y_src_start < y_src_end:
+        shifted[
+            y_src_start + dy:y_src_end + dy,
+            x_src_start + dx:x_src_end + dx
+        ] = image[
+            y_src_start:y_src_end,
+            x_src_start:x_src_end
+        ]
+
+    return shifted
+print("No hay desplazamiento")
+plot_image(shift_image(X_train[0], 0, 0))   
+print("Derecha 10 píxeles")
+plot_image(shift_image(X_train[0], 10, 0))
+print("Izquierda 10 píxeles")
+plot_image(shift_image(X_train[0], -10, 0))
+print("Abajo 10 píxeles")
+plot_image(shift_image(X_train[0], 0, 10))
+print("Arriba 10 píxeles")
+plot_image(shift_image(X_train[0], 0, -10))
+
+"""
+Ejercicio 19
+Crea X_train_shifted_right_10 desplazando todas las imágenes de entrenamiento 10 píxeles hacia la derecha
+ y representa las primeras 100. Algunos dígitos aparecen recortados: ¿cuáles y por qué?
+"""
+X_train_shifted_right_10 = np.array([shift_image(img, 10, 0) for img in X_train])
+plot_first_100(X_train_shifted_right_10)
+
+print("Al desplazar los pixeles hacia la derecha, los dígitos con píxeles cercanos se recortan")
+
+
+"""
+Ejercicio 20
+Escribe una función find_limits(image) que devuelva (top, bottom, left, right): 
+los índices de la primera y última fila y columna que contienen píxeles con valor distinto de cero.
+
+Comprueba que la primera imagen de entrenamiento devuelve (5, 24, 4, 23). Después, represéntala
+ dibujando sus límites mediante líneas (plt.axhline y plt.axvline)
+"""
+def find_limits(image):
+    rows, cols = np.where(image > 0)
+
+    top = rows.min()
+    bottom = rows.max()
+    left = cols.min()
+    right = cols.max()
+
+    return top, bottom, left, right
+
+print(find_limits(X_train[0]))
+# (5, 24, 4, 23)
+
+top, bottom, left, right = find_limits(X_train[0])
+
+plt.imshow(X_train[0], cmap="gray")
+plt.axhline(top, color="red")
+plt.axhline(bottom, color="red")
+plt.axvline(left, color="blue")
+plt.axvline(right, color="blue")
+plt.show()
+
+"""
+¿Cómo funciona?
+- np.where(image > 0) obtiene las coordenadas de todos los píxeles que contienen tinta.
+- rows.min() y rows.max() identifican las filas superior e inferior.
+- cols.min() y cols.max() identifican las columnas izquierda y derecha.
+- plt.axhline() dibuja líneas horizontales y plt.axvline() líneas verticales.
+El resultado es un rectángulo delimitador (bounding box) que encierra todos los píxeles del dígito.
+
+Ejercicio 21
+
+Escribe una función crop_image_limits(image) que devuelva la imagen recortada a sus límites. 
+¿Qué dimensiones tiene la primera imagen de entrenamiento después del recorte y por qué? 
+Recuerda cómo se construyó MNIST
+
+"""
+def crop_image_limits(image):
+    top, bottom, left, right = find_limits(image)
+
+    return image[top:bottom+1, left:right+1]
+
+cropped = crop_image_limits(X_train[0])
+
+print(cropped.shape)
+plot_image(cropped)
+
+print("mnist se construyó con imagenes normalizadas de 20x20 píxeles conservando sus proporciones")
+print("Posteriormente se añadieron 4 píxeles de relleno para que "
+"todas las imágenes fueran de 28x28 píxeles")
+
+"""
+Ejercicio 22. Desplazamiento aleatorio de imágenes
+
+«Crea X_train_shifted, que contenga todas las imágenes de entrenamiento desplazadas 
+aleatoriamente en horizontal y vertical, pero sin permitir que ningún píxel del dígito
+quede fuera de la imagen. Utiliza find_limits() para determinar cuánto puede desplazarse 
+cada dígito
+
+"""
+rng = np.random.default_rng(seed=42)
+
+X_train_shifted = np.empty_like(X_train)
+
+for i, image in enumerate(X_train):
+    top, bottom, left, right = find_limits(image)
+
+    # Desplazamientos máximos permitidos
+    dx = rng.integers(-left, image.shape[1] - right)
+    dy = rng.integers(-top, image.shape[0] - bottom)
+
+    X_train_shifted[i] = shift_image(image, int(dx), int(dy))
+
+plot_first_100(X_train_shifted)
+
+"""
+### **Ejercicio 22. Desplazamiento aleatorio de imágenes**
+
+**Traducción:**
+
+«Crea `X_train_shifted`, que contenga todas las imágenes de entrenamiento desplazadas 
+aleatoriamente en horizontal y vertical, pero sin permitir que ningún píxel del
+ dígito quede fuera de la imagen. Utiliza `find_limits()` para determinar cuánto
+puede desplazarse cada dígito.»
+
+
+
+- `find_limits()` identifica dónde comienza y termina el dígito.
+- `rng.integers()` elige desplazamientos aleatorios dentro del espacio disponible.
+- `shift_image()` desplaza la imagen sin perder ningún píxel del dígito.
+- `np.empty_like()` reserva un array con las mismas dimensiones y tipo de datos que `X_train`.
+
+Por ejemplo, si un dígito ocupa las columnas 4 a 23 de una imagen de 28 píxeles de ancho, 
+puede desplazarse **4 píxeles a la izquierda y 4 a la derecha**.
+
+**Concepto:** esto es una técnica de **aumento de datos (Data Augmentation)**. 
+Generamos variaciones de las imágenes originales para que un modelo aprenda
+ a reconocer los dígitos independientemente de su posición.
+"""
+rng = np.random.default_rng(seed=42)
+
+X_train_shifted = np.empty_like(X_train)
+
+for i, image in enumerate(X_train):
+    top, bottom, left, right = find_limits(image)
+
+    # Desplazamientos máximos permitidos
+    dx = rng.integers(-left, image.shape[1] - right)
+    dy = rng.integers(-top, image.shape[0] - bottom)
+
+    X_train_shifted[i] = shift_image(image, int(dx), int(dy))
+
+plot_first_100(X_train_shifted)
+
+"""
+Ejercicio 23
+Ampliación del conjunto de entrenamiento
+Crea X_train_augmented concatenando, en este orden, las imágenes originales de entrenamiento,
+ las que contienen ruido, las binarizadas, las que contienen ruido y están binarizadas, 
+ y las desplazadas aleatoriamente.
+
+Antes de concatenarlas, convierte los dos conjuntos binarizados de valores 0 y 1 a valores 0 y 255,
+ para que todas las imágenes compartan el mismo rango.
+
+Crea y_train_augmented con las etiquetas correspondientes. ¿Cuántas imágenes hay?
+"""
+X_train_augmented = np.concatenate([
+    X_train,
+    X_train_noisy,
+    X_train_binarized * 255,
+    X_train_noisy_binarized * 255,
+    X_train_shifted
+], axis=0)
+
+y_train_augmented = np.tile(y_train, 5)
+
+print(X_train_augmented.shape)
+print(y_train_augmented.shape)
+
+print("Esta técnica permite entrenar un modelo con distintas versiones de los"
+      "mismos dígitos")
+
