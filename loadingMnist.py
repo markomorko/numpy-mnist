@@ -389,4 +389,65 @@ def add_gaussian_noise(images: np.ndarray, std: float) -> np.ndarray:
     return noisy_images.astype(np.uint8)
 
 X_train_noisy = add_gaussian_noise(X_train, std=50)
-plot_first_100(X_train_noisy)    
+plot_first_100(X_train_noisy)
+
+"""
+Binarización de imágenes
+Escribe => binarize_image (image, threshold)
+
+Esta función devuelve 1 cuando un pixel es mayor que threshold y cero en otro caso,
+empleando el tipo de datos uint8.
+La función debe funcionar con una imagen individual y con un conjunto de imágenes.
+
+Crea => X_train_binarized con un umbral (treshold) = 128 y representa gráficamente
+con plot las primeras 100 imágenes.
+"""
+def binarize_image(image, threshold):
+    Xtb=np.where(image>threshold,1,0).astype(np.uint8)
+    return Xtb
+
+X_train_binarized=binarize_image(X_train,128)
+plot_first_100(X_train_binarized)       
+
+"""
+16
+Muestra gráficamente las primeras 100 imágenes de X_train_binarized y
+X_train_noisy, y compara los resultados. ¿Qué diferencias observas?
+
+"""
+X_train_bin_80 = binarize_image(X_train, threshold=80)
+plot_first_100(X_train_bin_80)
+X_train_bin_180 = binarize_image(X_train, threshold=180)
+plot_first_100(X_train_bin_180)
+
+print("Con el umbral más bajo, se descartan menos píxeles, por eso se ven trazos más gruesos")
+
+"""
+Ejercicio 17
+
+Crea => X_train_noisy_binarized 
+binarizando las imágenes con ruido mediante un umbral de 128 
+y representa las primeras 100. Prueba otros umbrales: ¿cuál elimina la mayor cantidad de ruido 
+sin deteriorar los dígitos?
+"""
+print("X_train_noisy_binarized con umbral 128")
+X_train_noisy_binarized=binarize_image(X_train_noisy,128)
+plot_first_100(X_train_noisy_binarized)
+
+print("X_train_noisy_binarized con umbral 8")
+X_train_noisy_binarized=binarize_image(X_train_noisy,8)
+plot_first_100(X_train_noisy_binarized)
+
+print("X_train_noisy_binarized con umbral 80")
+X_train_noisy_binarized=binarize_image(X_train_noisy,80)
+plot_first_100(X_train_noisy_binarized)     
+
+print("X_train_noisy_binarized con umbral 180")
+X_train_noisy_binarized=binarize_image(X_train_noisy,180)
+plot_first_100(X_train_noisy_binarized)   
+
+print("X_train_noisy_binarized con umbral 240")
+X_train_noisy_binarized=binarize_image(X_train_noisy,240)
+plot_first_100(X_train_noisy_binarized)   
+
+print("Si el umbral es muy bajo, se observa ruido, si es muy alto se pierden detalles")
